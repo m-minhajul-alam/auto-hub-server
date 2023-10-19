@@ -25,6 +25,7 @@ async function run() {
         await client.connect();
 
         const productCollection = client.db('autoHubDB').collection('products');
+        const myCartCollection = client.db('autoHubDB').collection('myCart');
 
         app.get('/products', async (req, res) => {
             const cursor = productCollection.find();
@@ -40,10 +41,23 @@ async function run() {
             res.send(result);
         })
 
+        app.get('/myCart', async (req, res) => {
+            const cursor = myCartCollection.find();
+            const result = await cursor.toArray();
+            res.send(result)
+        })
+
         app.post('/products', async (req, res) => {
             const newProduct = req.body;
             // console.log(newProduct);
             const result = await productCollection.insertOne(newProduct);
+            res.send(result);
+        })
+
+        app.post('/myCart', async (req, res) => {
+            const myCart = req.body;
+            // console.log(myCart);
+            const result = await myCartCollection.insertOne(myCart);
             res.send(result);
         })
 
