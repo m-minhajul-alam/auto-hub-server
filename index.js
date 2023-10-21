@@ -20,8 +20,6 @@ const client = new MongoClient(uri, {
 
 async function run() {
     try {
-        // await client.connect();
-
         const productCollection = client.db('autoHubDB').collection('products');
         const myCartCollection = client.db('autoHubDB').collection('myCart');
 
@@ -64,6 +62,8 @@ async function run() {
             const result = await productCollection.updateOne(query, product, option);
             res.send(result);
         })
+
+
 
         // myCartCollection
         app.get('/myCart', async (req, res) => {
